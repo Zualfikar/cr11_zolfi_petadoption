@@ -70,6 +70,7 @@ if($_GET["id"]){
   </ul>
   <div class="card-body">
 <a href="adopt.php?id=<?php echo $row['animal_id'] ?>" class=""><button type="button" class="btn btn-info">Adopting</button></a>
+<a href="location.php?id=<?php echo $row['animal_id'] ?>" class=""><button type="button" class="btn btn-info">location</button></a>
     
   </div>
 </div>

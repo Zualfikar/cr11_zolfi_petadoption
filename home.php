@@ -59,6 +59,7 @@ $userRow=mysqli_fetch_array($res, MYSQLI_ASSOC);
         <i class="icofont-envelope"></i><a href="mailto:contact@example.com">zu_alfikar_hasan@outlook.sa</a>
         <i class="icofont-phone"></i> +43 06702015181
       </div>
+     
       <div class="social-links float-right">
         <a href="#" class="twitter"><i class="icofont-twitter"></i></a>
         <a href="#" class="facebook"><i class="icofont-facebook"></i></a>
@@ -90,6 +91,7 @@ $userRow=mysqli_fetch_array($res, MYSQLI_ASSOC);
               
           <li><a href="#contact">Contact Us</a></li>
           <li><a  href="logout.php?logout">Sign Out</a></li>
+
         </ul>
       </nav><!-- .nav-menu -->
 
@@ -193,7 +195,16 @@ $userRow=mysqli_fetch_array($res, MYSQLI_ASSOC);
 
 
     <!-- ======= Our Portfolio Section ======= -->
+
     <section id="portfolio" class="portfolio section-bg">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="section-title">
+          <h2>Our Portfolio</h2>
+          <p>Take a look about our sweety animals.</p>
+        
+ <form id='formData' class="form">
+            <input id='use' class="form-control mr-sm-2" type="search" placeholder="search for a pet" name="search"></form></div>
       <?php
 
 
@@ -207,15 +218,7 @@ if ($result->num_rows == 0){
   echo $row["name"];
 }else{
   $rows= $result->fetch_all(MYSQLI_ASSOC);
-echo '
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="section-title">
-          <h2>Our Portfolio</h2>
-          <p>Take a look about our sweety animals.</p>
-        </div>
-
-        <div class="row">
+echo '<div class="row">
           <div class="col-lg-12">
             <ul id="portfolio-flters">
               <li data-filter="*" class="filter-active">All</li>
@@ -226,7 +229,7 @@ echo '
           </div>
         </div>
 
-        <div class="row portfolio-container">';
+        <div id="content" class="row portfolio-container">';
 
   foreach($rows as $key => $value){
     if($value["type"]=="small"){
@@ -513,6 +516,57 @@ echo '</div></div>';
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+// Variable to hold request
+var request;
+// Bind to the submit event of our form
+$("#use").keyup(function(event){
+  // Prevent default posting of form - put here to work in case of errors
+  event.preventDefault();
+  // Abort any pending request
+  if (request) {
+    request.abort();
+  }
+  // setup some local variables
+  var $form = $(this);
+  // Let's select and cache all the fields
+  var $inputs = $form.find("input, select, button, textarea");
+  // Serialize the data in the form
+  var serializedData = $form.serialize();
+  // Let's disable the inputs for the duration of the Ajax request.
+  // Note: we disable elements AFTER the form data has been serialized.
+  // Disabled form elements will not be serialized.
+  $inputs.prop("disabled", true);
+  // Fire off the request to /form.php
+  request = $.ajax({
+    url: "searchfunction.php",
+    type: "post",
+    data: serializedData
+  });
+  // Callback handler that will be called on success
+  request.done(function (response, textStatus, jqXHR){
+    // Log a message to the console
+   document.getElementById('content').innerHTML = response;
+  });
+  // Callback handler that will be called on failure
+  request.fail(function (jqXHR, textStatus, errorThrown){
+    // Log the error to the console
+    console.error(
+      "The following error occurred: "+
+      textStatus, errorThrown
+    );
+  });
+  // Callback handler that will be called regardless
+  // if the request failed or succeeded
+  request.always(function () {
+    // Reenable the inputs
+    $inputs.prop("disabled", false);
+  });
+});
+
+
+</script>
 
 </body>
 
