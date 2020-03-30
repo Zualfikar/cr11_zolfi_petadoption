@@ -19,14 +19,24 @@ if($_GET["id"]){
 	$row= $result->fetch_assoc();
 	$row= json_encode($row,true);
 	echo'<div id="data">'.$row.'</div>';
+}
+class loc{
+private $id;
+private $lat;
+private $lng;
+function setid($id){$this->id=$id;}
+function setlet($let){$this->let=$let;}
+function setlng($lng){$this->lng=$lng;}
+function getid(){return $this->id;}
+function getlet(){return $this->let;}
+function getlng(){return $this->lng;}
+public function updatelocwith(){
+	$sql1="UPDATE animal SET lat=$this->lat,lng=$this->lng WHERE animal_id=$this->id";
+	$result1= mysqli_query($conn,$sql1);
+	$row1= $result1->fetch_assoc();
+}
 
 }
-$id;
-$lat;
-$lng;
-$sql1="UPDATE animal SET lat=$lat,lng=$lng WHERE animal_id=$id";
-	$result1= mysqli_query($conn,$sql);
-	$row1= $result->fetch_assoc();
  ?>
  <html>
  <head>

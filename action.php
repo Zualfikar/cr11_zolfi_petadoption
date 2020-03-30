@@ -1,20 +1,18 @@
 <?php 
 
 
-require_once 'dbconnect.php';
+require_once 'location.php';
+$loca= new loc;
+$loca->setid($_REQUEST['id']);
+$loca->setlet($_REQUEST['let']);
+$loca->setlng($_REQUEST['lng']);
+$status=$loca->updatelocwith();
+if($status==true){
+	echo "update";
 
-
-
-echo $_REQUEST;
-if($_REQUEST) {
-
-	$id=$_REQUEST['id'];
-$lat=$_REQUEST['lat'];
-$lng=$_REQUEST['lng'];
-
-	$sql1="UPDATE animal SET lat=$lat,lng=$lng WHERE animal_id=$id";
-	$result1= mysqli_query($conn,$sql);
-	$row1= $result->fetch_assoc();
-	
+}else{
+	echo "false";
 }
+
+
  ?>
